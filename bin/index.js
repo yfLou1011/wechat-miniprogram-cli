@@ -38,6 +38,14 @@ program.on("--help", function () {
   console.log();
 });
 
+// todo init文件
+program
+  .command("init")
+  .description("init config files")
+  .action(() => {
+    // require("../lib/init.js");
+  });
+
 // 项目启动
 program
   .command("start")
@@ -55,7 +63,7 @@ program
     }
   });
 
-// 在开发者工具打开(todo)
+// todo 在开发者工具打开
 program
   .command("open")
   .description("create a new project")
@@ -69,9 +77,7 @@ program
   .command("create")
   .description("create a new project")
   .option("-f, --force", "overwrite target directory if it exists")
-  .action((projectName, cmd) => {
-    // 引入 create 模块，并传入参数
-    // require("../archive/create")(projectName, cmd);
+  .action(() => {
     require("../lib/create");
   });
 

@@ -1,9 +1,9 @@
 {
-  "name": "wx-mini-cli",
+  "name": "wechat-miniprogram-cli",
   "version": "1.0.0",
   "main": "index.js",
   "bin": {
-    "wx-mini-cli": "bin/index.js"
+    "wechat-miniprogram-cli": "bin/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
