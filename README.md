@@ -18,20 +18,25 @@
 
    `wechat-miniprogram-cli -h`
 
-3. (todo)初始化配置文件
+3. (todo)拉取小程序项目 init
 
-- 在./scripts 生成 script.env.js 文件
-- 在根目录生成.gitlab-ci.yml 文件
+   `wechat-miniprogram-cli init`
 
-  `wechat-miniprogram-cli init`
+4. 初始化配置文件
 
-4. 安装构建依赖 & 切换环境
+   `wechat-miniprogram-cli config`
+
+   提供以下 config 文件模板
+
+   - script.env.js
+   - .gitlab-ci.yml
+   - .gitignore
+   - .eslintrc.js
+   - .prettierrc.js
+
+5. 安装构建依赖 & 切换环境
 
    `wechat-miniprogram-cli start`
-
-5. (todo)在打开开发者工具中打开
-
-   `wechat-miniprogram-cli open`
 
 6. 创建页面或组件
 
@@ -44,6 +49,7 @@
 ## 关于使用 miniprogram-ci
 
 - 使用 miniprogram-ci 前，应前往 [微信公众平台](https://mp.weixin.qq.com/) 开发管理-开发设置-小程序代码上传，下载小程序上传秘钥并把文件放在根目录
+- 请确认秘钥与`project.config.json`里的 `appid` 是一致的
 - 一般来说自己使用，可以关闭 IP 白名单，因为 IP 地址可能变
 
 ## 关于使用 企微推送开发版二维码
