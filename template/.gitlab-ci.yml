@@ -1,0 +1,102 @@
+default:
+  image: docker-reg.devops.xiaohongshu.com/fe/karin-cli:$KARIN_CLI_VERSION
+  before_script:
+    - node -v
+    - npm i
+
+stages:
+  - merge
+  - upload
+  - preview
+  - deploy
+
+.auto-run-refs:
+  only:
+    variables:
+      - $ENV == null
+  before_script:
+    - export ENV
+    - |
+      if [[ "$CI_COMMIT_REF_NAME" =~ ^release/.*$ ]]; then ENV="sit"
+      elif [[ "$CI_COMMIT_REF_NAME" =~ ^master/.*$ ]]; then ENV="prod"
+      else ENV="sit"
+      fi
+
+.auto-merge:
+  stage: merge
+  script:
+    - echo $CI_PROJECT_URL
+    - echo $CI_COMMIT_REF_NAME
+    
+# 自动触发 upload
+auto-upload:
+  stage: upload
+  only:
+    refs:
+      - /^release/.*$/
+  before_script:
+    - node -v
+    - npm i
+    - export ENV="sit"
+  script:
+    - echo $CI_COMMIT_REF_NAME $ENV
+    - node scripts/publish/deploy.js upload "$ENV"
+    - echo "auto-deploy-done"
+  cache:
+    untracked: true
+    paths:
+      - node_modules/
+
+# tag触发流水线
+auto-deploy:
+  stage: deploy
+  only:
+    - tags
+  before_script:
+    - node -v
+    - npm i
+    - export ENV="prod"
+  script:
+    - echo $CI_COMMIT_TAG $ENV
+    - node scripts/publish/deploy.js upload "$ENV" "$ROBOT" "$CI_COMMIT_TAG"
+    - echo "auto-deploy-done"
+  cache:
+    untracked: true
+    paths:
+      - node_modules/
+
+# 自动触发 preview
+auto-preview: 
+  stage: preview
+  only:
+    refs:
+      - master
+  except: 
+    - tags
+  script:
+    - echo $CI_COMMIT_REF_NAME $ENV
+    - node scripts/publish/deploy.js preview
+    - echo "auto-deploy-done"
+  cache:
+    untracked: true
+    paths:
+      - node_modules/
+      - miniprogram_npm/
+
+# 手动触发 preview
+manual-preview:
+  stage: preview
+  except:
+    variables:
+      - $ENV == null || $ROBOT == null
+    refs:
+      - master
+  only:
+    variables:
+      - $ENV =~ /^sit|beta|prod$/
+      - $ROBOT =~ /^([12][0-9]|30|[1-9])$/
+  script:
+    - echo $ENV $ROBOT $CI_COMMIT_REF_NAME
+    - node scripts/publish/deploy.js preview "$ENV" "$ROBOT"
+    - echo "manual-preview-done"
+  when: manual
