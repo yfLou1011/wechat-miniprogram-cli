@@ -6,6 +6,8 @@
 
 `npm i wechat-miniprogram-cli -g`
 
+项目使用参考地址 [wechat-miniprogram-template](https://code.devops.xiaohongshu.com/yifanlou/wechat-mini-program-cli)
+
 ## 命令行使用
 
 1. 查看命令行工具版本
