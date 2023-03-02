@@ -3,9 +3,9 @@ const path = require("path");
 const md5File = require("md5-file");
 const fs = require("fs");
 
-let projectPath = process.cwd();
-let { webHookPath } = require(`${projectPath}/project.config.json`);
-let { msgTemplate } = require("./git-info");
+const projectPath = process.cwd();
+const { webHookPath } = require(`${projectPath}/project.config.json`);
+const { msgTemplate } = require("./git-info");
 
 /**
  * 通过企业微信发送通知

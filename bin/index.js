@@ -2,8 +2,7 @@
 const { program } = require("commander");
 const chalk = require("chalk");
 
-let projectPath = process.cwd();
-let { appid } = require(`${projectPath}/project.config.json`);
+const projectPath = process.cwd();
 const Utils = require("../utils/index");
 
 // 查看版本号
@@ -21,12 +20,12 @@ program.on("--help", function () {
   );
 });
 
-// todo init小程序项目
+// init模块
 program
-  .command("init")
+  .command("init <project-name>")
   .description("init a wechat miniprogram program")
-  .action(() => {
-    // require("../lib/init.js");
+  .action((projectName, cmd) => {
+    require("../lib/init.js")(projectName, cmd);
   });
 
 // 配置config文件
@@ -42,7 +41,7 @@ program
   .command("start")
   .description("update env & pack npm package")
   .action(() => {
-    console.log({ appid });
+    let { appid } = require(`${projectPath}/project.config.json`);
     if (!Utils.checkFileExist(`${projectPath}/scripts`)) {
       console.log(
         `${chalk.red("根目录找不到执行脚本")}\n请执行${chalk.cyan(
@@ -90,7 +89,7 @@ program
   .description("upload project & send qrCode to chat")
   .option("-f, --force", "overwrite target directory if it exists")
   .action(() => {
-    console.log({ appid });
+    let { appid } = require(`${projectPath}/project.config.json`);
     if (!Utils.checkFileExist(`${projectPath}/private.${appid}.key`)) {
       console.log(
         `${chalk.red("根目录找不到上传密钥")}\n请查看README里${chalk.cyan(
