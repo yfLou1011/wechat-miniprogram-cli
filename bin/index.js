@@ -46,20 +46,28 @@ program
   .description("update env & pack npm package")
   .action(() => {
     console.log({ appid });
-    if (!Utils.checkFileExist(`${projectPath}/private.${appid}.key`)) {
-      console.log(
-        `${chalk.red(
-          "根目录找不到上传密钥 or 秘钥与appid不匹配"
-        )}\n请查看README里${chalk.cyan("【关于使用miniprogram-ci】")}部分`
-      );
-    } else if (!Utils.checkFileExist(`${projectPath}/scripts`)) {
+    if (!Utils.checkFileExist(`${projectPath}/scripts`)) {
       console.log(
         `${chalk.red("根目录找不到执行脚本")}\n请执行${chalk.cyan(
           "wechat-miniprogram-cli config"
         )}并选择${chalk.cyan("script.env.js")}`
       );
+      return;
+    }
+    if (!Utils.checkFileExist(`${projectPath}/private.${appid}.key`)) {
+      console.log(
+        `${chalk.red(
+          " 根目录找不到上传密钥 or 秘钥与appid不匹配"
+        )}\n ${chalk.cyan(
+          "请前往微信开发者工具-编辑-npm构建"
+        )}\n 如需使用自动化构建，请查看README里${chalk.cyan(
+          "【关于使用miniprogram-ci】"
+        )}部分 
+       `
+      );
+      require("../lib/start.js")(false);
     } else {
-      require("../lib/start.js");
+      require("../lib/start.js")(true);
     }
   });
 
