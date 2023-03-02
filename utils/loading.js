@@ -27,6 +27,7 @@ async function loading(message, fn, ...args) {
     spinner.succeed();
     return executeRes;
   } catch (error) {
+    // console.log("===loading===", { error });
     spinner.fail("request fail, reTrying");
     await sleep(1000);
     return loading(message, fn, ...args);
