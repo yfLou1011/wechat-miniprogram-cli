@@ -14,14 +14,11 @@ program.name("wx-mini-cli").usage(`<command> [option]`);
 
 // 监听 --help 指令
 program.on("--help", function () {
-  // 前后两个空行调整格式，更舒适
-  console.log();
   console.log(
     `Run ${chalk.cyan(
       "wx-mini-cli <command> --help"
     )} for detailed usage of given command.`
   );
-  console.log();
 });
 
 // todo init小程序项目
@@ -58,16 +55,14 @@ program
       console.log(
         `${chalk.red(
           " 根目录找不到上传密钥 or 秘钥与appid不匹配"
-        )}\n ${chalk.cyan(
-          "请前往微信开发者工具-编辑-npm构建"
         )}\n 如需使用自动化构建，请查看README里${chalk.cyan(
           "【关于使用miniprogram-ci】"
         )}部分 
        `
       );
-      require("../lib/start.js")(false);
+      require("../lib/start.js")({ packNpm: false });
     } else {
-      require("../lib/start.js")(true);
+      require("../lib/start.js")({ packNpm: true });
     }
   });
 
@@ -95,7 +90,7 @@ program
   .description("upload project & send qrCode to chat")
   .option("-f, --force", "overwrite target directory if it exists")
   .action(() => {
-    console.log("===", appid);
+    console.log({ appid });
     if (!Utils.checkFileExist(`${projectPath}/private.${appid}.key`)) {
       console.log(
         `${chalk.red("根目录找不到上传密钥")}\n请查看README里${chalk.cyan(
