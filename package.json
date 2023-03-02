@@ -2,6 +2,7 @@
   "name": "wechat-miniprogram-cli",
   "version": "1.0.0",
   "main": "index.js",
+  "description": "提供快速启动、开发辅助、打包部署等功能的小程序脚手架",
   "bin": {
     "wechat-miniprogram-cli": "bin/index.js"
   },
@@ -19,6 +20,7 @@
     "axios": "^1.3.4",
     "chalk": "^4.0.0",
     "commander": "^10.0.0",
+    "dayjs": "^1.11.7",
     "figlet": "^1.5.2",
     "fs-extra": "^11.1.0",
     "inquirer": "^8.0.0",
@@ -26,5 +28,8 @@
     "miniprogram-ci": "^1.9.5",
     "ora": "^5.0.0"
   },
-  "description": ""
+  "repository": {
+    "type": "git",
+    "url": "git@code.devops.xiaohongshu.com:yifanlou/wechat-miniprogram-cli.git"
+  }
 }

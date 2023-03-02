@@ -5,7 +5,7 @@ const fs = require("fs");
 
 let projectPath = process.cwd();
 let { webHookPath } = require(`${projectPath}/project.config.json`);
-let { msgTemplate } = require(`${projectPath}/lib/git-info`);
+let { msgTemplate } = require("./git-info");
 
 /**
  * 通过企业微信发送通知
